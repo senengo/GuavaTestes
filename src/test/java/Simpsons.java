@@ -13,7 +13,6 @@ public class Simpsons {
 			.add("Marge")
 			.add("Moe")
 			.add("Krusty")
-			.add("Krusty")
 			.add("Maggie")
 			.add("Barney")
 			.add("Burns")
