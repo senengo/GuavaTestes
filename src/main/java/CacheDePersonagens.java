@@ -32,7 +32,7 @@ public class CacheDePersonagens {
 		@Override
 		public String load(PersonagemKey key) throws Exception {
 			
-			System.err.println("Buscando pele cache Loader...");
+			System.err.println("Buscando pelo cache Loader...");
 			
 			Thread.sleep(2000);
 			
