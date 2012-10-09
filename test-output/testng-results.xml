@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="4228" started-at="2012-10-09T02:58:17Z" finished-at="2012-10-09T02:58:21Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="4228" started-at="2012-10-09T02:58:17Z" finished-at="2012-10-09T02:58:21Z">
+      <class name="TesteDeLoadingCache">
+        <test-method status="PASS" signature="Testa_a_busca_do_Loading_cache()[pri:0, instance:TesteDeLoadingCache@235b869]" name="Testa_a_busca_do_Loading_cache" duration-ms="4163" started-at="2012-10-08T23:58:17Z" finished-at="2012-10-08T23:58:21Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Testa_a_busca_do_Loading_cache -->
+      </class> <!-- TesteDeLoadingCache -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
