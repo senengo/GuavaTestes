@@ -1,5 +1,6 @@
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
+import com.google.common.cache.CacheStats;
 import com.google.common.cache.LoadingCache;
 
 
@@ -8,10 +9,15 @@ public class CacheDePersonagens {
 	private final LoadingCache <PersonagemKey,String> cache;
 	
 	public CacheDePersonagens() {
-		this.cache = CacheBuilder.newBuilder()
+		this.cache = CacheBuilder
+				.newBuilder()
+				.recordStats()
 				.build(new LoaderPersonagens());
 	}
 	
+	public CacheStats getStats(){
+		 return cache.stats();
+	}
 	
 	public String porPersonagemKey(PersonagemKey key){
 		return cache.getUnchecked(key);
@@ -32,9 +38,9 @@ public class CacheDePersonagens {
 		@Override
 		public String load(PersonagemKey key) throws Exception {
 			
-			System.err.println("Buscando pele cache Loader...");
+			System.err.println("Buscando pelo cache Loader...");
 			
-			Thread.sleep(2000);
+			Thread.sleep(500);
 			
 			return Simpsons.porPersonagemKey(key);
 		}

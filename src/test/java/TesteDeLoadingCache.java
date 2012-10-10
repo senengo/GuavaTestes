@@ -1,5 +1,9 @@
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import com.google.common.base.Optional;
+import com.google.common.cache.CacheLoader.InvalidCacheLoadException;
+import com.google.common.cache.CacheStats;
 /*
  * Teste do cache guava - Ricardo Murad
  */
@@ -10,31 +14,48 @@ public class TesteDeLoadingCache {
 	
 	public void Testa_a_busca_do_Loading_cache(){
 		
-		PersonagemKey key1 = new PersonagemKey("Lisa");
-		PersonagemKey key2 = new PersonagemKey("Homer");
 		
 		// Cache tem que estar zerado
-		Assert.assertEquals(cache.size(), 0);
+		Assert.assertEquals(cache.size(), 0); 
 		
+		
+		PersonagemKey key1 = new PersonagemKey("Lisa");
+		
+		// 2 chamadas ao mesmo key só uma chamada ao loader
 		String res1 = cache.porPersonagemKey(key1);
+		String res2 = cache.porPersonagemKey(key1);
 		
-		Assert.assertEquals(res1, "Lisa");
-		Assert.assertEquals(res1, "Lisa");
-		Assert.assertEquals(res1, "Lisa");
+		Assert.assertEquals(res1, res2);
+		Assert.assertEquals(cache.size(), 1);
 		
-		// Lisa foi chamada 3 vezes mas o cache Loader só foi
-		// chamado na primeira quando o cache estava vazio
-		System.err.println(cache.size());
+		CacheStats stats = cache.getStats();
+		Assert.assertEquals(stats.loadCount(), 1);
+		
 		
 		// Buscando Homer agora cacheLoader é usado novamente
-		String res2 = cache.porPersonagemKey(key2);
-		Assert.assertEquals(res2, "Homer");
+		PersonagemKey key2 = new PersonagemKey("Homer");
+		String res3 = cache.porPersonagemKey(key2);
+		String res4 = cache.porPersonagemKey(key2);
+		Assert.assertEquals(res3, res4);
 		
-		//Tamanho final do cache = 2
-		System.err.println(cache.size());
+		stats = cache.getStats();
+		Assert.assertEquals(stats.loadCount(), 2);
 		
-		// Cache tem que ter 2 elementos
-		Assert.assertEquals(cache.size(), 2);
+//		Para testar retorno null		
+//		PersonagemKey inexistente = new PersonagemKey("inexistente");
+//		String res = cache.porPersonagemKey(inexistente);
+		
+		stats = cache.getStats();
+		
+		Assert.assertEquals(stats.requestCount(), 4);
+		Assert.assertEquals(stats.loadCount(), 2);
+		
+		System.err.println("\n# ###########################");
+		System.err.println("# Estastísticas do cache");
+		System.err.println("# Chamadas ao Cache: " + stats.requestCount());
+		System.err.println("# Chamadas ao Lodader: " + stats.loadCount());
+		System.err.println("# Tempo gasto carregando novos valores: " + stats.totalLoadTime());
+
 	}
 
 }
